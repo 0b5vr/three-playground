@@ -1,0 +1,35 @@
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #000;
+    color: #fff;
+  }
+}
+
+#divExamples {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 32px;
+  display: flex;
+  padding: 0 8px;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+#divEditor {
+  position: fixed;
+  right: 0;
+  top: 32px;
+  width: 50%;
+  height: calc(100% - 32px);
+  overflow: hidden;
+}
+
+#canvas {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 50%;
+  height: 100%;
+}
