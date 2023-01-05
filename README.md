@@ -1,6 +1,6 @@
-# three-fixture
+# three-playground
 
-![How three-fixture looks like](readme-images/screenshot.png)
+![How three-playground looks like](readme-images/screenshot.png)
 
 ### Features
 
