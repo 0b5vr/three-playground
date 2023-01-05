@@ -1,0 +1,72 @@
+const e=`declare module 'three/src/lights/Light' {
+import { Color } from 'three/src/math/Color';
+import { LightShadow } from 'three/src/lights/LightShadow';
+import { Object3D } from 'three/src/core/Object3D';
+
+// Lights //////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Abstract base class for lights.
+ */
+export class Light extends Object3D {
+    constructor(hex?: number | string, intensity?: number);
+
+    /**
+     * @default 'Light'
+     */
+    type: string;
+
+    color: Color;
+
+    /**
+     * @default 1
+     */
+    intensity: number;
+    readonly isLight: true;
+
+    shadow: LightShadow;
+    /**
+     * @deprecated Use shadow.camera.fov instead.
+     */
+    shadowCameraFov: any;
+    /**
+     * @deprecated Use shadow.camera.left instead.
+     */
+    shadowCameraLeft: any;
+    /**
+     * @deprecated Use shadow.camera.right instead.
+     */
+    shadowCameraRight: any;
+    /**
+     * @deprecated Use shadow.camera.top instead.
+     */
+    shadowCameraTop: any;
+    /**
+     * @deprecated Use shadow.camera.bottom instead.
+     */
+    shadowCameraBottom: any;
+    /**
+     * @deprecated Use shadow.camera.near instead.
+     */
+    shadowCameraNear: any;
+    /**
+     * @deprecated Use shadow.camera.far instead.
+     */
+    shadowCameraFar: any;
+    /**
+     * @deprecated Use shadow.bias instead.
+     */
+    shadowBias: any;
+    /**
+     * @deprecated Use shadow.mapSize.width instead.
+     */
+    shadowMapWidth: any;
+    /**
+     * @deprecated Use shadow.mapSize.height instead.
+     */
+    shadowMapHeight: any;
+
+    dispose(): void;
+}
+
+}`;export{e as default};

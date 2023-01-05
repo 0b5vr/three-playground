@@ -1,0 +1,31 @@
+const r=`declare module 'three/src/helpers/PolarGridHelper' {
+import { LineSegments } from 'three/src/objects/LineSegments';
+import { ColorRepresentation } from 'three/src/utils';
+
+export class PolarGridHelper extends LineSegments {
+    /**
+     * @param [radius=10]
+     * @param [radials=16]
+     * @param [circles=8]
+     * @param [divisions=64]
+     * @param [color1=0x444444]
+     * @param [color2=0x888888]
+     */
+    constructor(
+        radius?: number,
+        radials?: number,
+        circles?: number,
+        divisions?: number,
+        color1?: ColorRepresentation,
+        color2?: ColorRepresentation,
+    );
+
+    /**
+     * @default 'PolarGridHelper'
+     */
+    type: string;
+
+    dispose(): void;
+}
+
+}`;export{r as default};
