@@ -1,5 +1,9 @@
 # three-fixture
 
+![How three-fixture looks like](readme-images/screenshot.png)
+
+### Features
+
 - Three.js and several related modules are installed
 - Monaco Editor with type definitions enabled (it's TypeScript mode actually)
 - `Ctrl+S` (or `Ctrl+R`) to run instantly
