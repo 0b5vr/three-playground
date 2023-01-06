@@ -105,6 +105,18 @@ async function buildTypes( moduleName, srcDir ) {
   // build types
   const moduleEntries = [
     [ '@pixiv/three-vrm', path.resolve( dirname, '../node_modules/@pixiv/three-vrm/types' ) ],
+    [ '@pixiv/three-vrm-core', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-core/types' ) ],
+    [ '@pixiv/three-vrm-materials-hdr-emissive-multiplier', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-materials-hdr-emissive-multiplier/types' ) ],
+    [ '@pixiv/three-vrm-materials-mtoon', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-materials-mtoon/types' ) ],
+    [ '@pixiv/three-vrm-materials-v0compat', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-materials-v0compat/types' ) ],
+    [ '@pixiv/three-vrm-node-constraint', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-node-constraint/types' ) ],
+    [ '@pixiv/three-vrm-springbone', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-springbone/types' ) ],
+    [ '@pixiv/types-vrm-0.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrm-0.0/types' ) ],
+    [ '@pixiv/types-vrmc-materials-hdr-emissive-multiplier-1.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-materials-hdr-emissive-multiplier-1.0/types' ) ],
+    [ '@pixiv/types-vrmc-materials-mtoon-1.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-materials-mtoon-1.0/types' ) ],
+    [ '@pixiv/types-vrmc-node-constraint-1.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-node-constraint-1.0/types' ) ],
+    [ '@pixiv/types-vrmc-springbone-1.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-springbone-1.0/types' ) ],
+    [ '@pixiv/types-vrmc-vrm-1.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-vrm-1.0/types' ) ],
     [ 'camera-controls', path.resolve( dirname, '../node_modules/camera-controls/dist' ) ],
     [ 'three', path.resolve( dirname, '../node_modules/@types/three' ) ],
   ];
