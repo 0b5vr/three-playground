@@ -11,7 +11,7 @@ const canvas = document.getElementById( 'canvas' ) as HTMLCanvasElement;
 const darkMode = window.matchMedia( '(prefers-color-scheme: dark)' ).matches;
 
 async function fetchExample( name: string ): Promise<void> {
-  const res = await fetch( `./presets/${ name }.js` );
+  const res = await fetch( `./presets/${ name }.ts` );
   const text = await res.text();
 
   editor.getModel()!.setValue( text );

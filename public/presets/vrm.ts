@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
+import { VRM, VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
 
 export default ( ( { canvas } ) => {
   const { width, height } = canvas.getBoundingClientRect();
@@ -31,9 +31,9 @@ export default ( ( { canvas } ) => {
     return new VRMLoaderPlugin( parser );
   } );
 
-  let currentVrm = null;
+  let currentVrm: VRM | null = null;
 
-  async function loadVRM( url ) {
+  async function loadVRM( url: string ) {
     if ( currentVrm ) {
       scene.remove( currentVrm.scene );
       VRMUtils.deepDispose( currentVrm.scene );
