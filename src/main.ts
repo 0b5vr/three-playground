@@ -2,6 +2,7 @@ import * as monaco from 'monaco-editor';
 import { registerMonacoWorkers } from './registerMonacoWorkers';
 import { registerThreeTypes } from './registerThreeTypes';
 import './style.css';
+import { transpile, CompilerOptions, ScriptTarget, ModuleKind } from 'typescript';
 
 const selectPresets = document.getElementById( 'selectPresets' ) as HTMLSelectElement;
 const divEditor = document.getElementById( 'divEditor' ) as HTMLDivElement;
@@ -38,18 +39,24 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions( {
   moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
 } );
 
-monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-    noSemanticValidation: false,
-    noSyntaxValidation: false
-})
+monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions( {
+  noSemanticValidation: false,
+  noSyntaxValidation: false,
+} );
+
+const compilerOptions: CompilerOptions = {
+  target: ScriptTarget.ES2015,
+  module: ModuleKind.ES2015,
+};
 
 let lastUnmount: () => void | undefined;
 
 const apply = () => {
   lastUnmount?.();
 
-  const code = editor.getValue();
-  const blob = new Blob( [ code ], { type: 'text/javascript' } );
+  const tsCode = editor.getValue();
+  const jsCode = transpile( tsCode, compilerOptions );
+  const blob = new Blob( [ jsCode ], { type: 'text/javascript' } );
   const url = URL.createObjectURL( blob );
 
   import( url ).then( ( mod ) => {
