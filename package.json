@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build-three-types && npm run build-vite",
+    "build": "npm run build-types && npm run build-vite",
     "build-vite": "tsc && vite build",
-    "build-three-types": "node bin/prepare-three-types.mjs",
+    "build-types": "node bin/prepare-types.mjs",
     "preview": "vite preview"
   },
   "devDependencies": {
