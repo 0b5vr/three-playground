@@ -1,0 +1,12 @@
+const n=`declare module '@pixiv/three-vrm-node-constraint/helpers/VRMNodeConstraintHelper' {
+import * as THREE from 'three';
+import { VRMNodeConstraint } from '@pixiv/three-vrm-node-constraint/VRMNodeConstraint';
+export declare class VRMNodeConstraintHelper extends THREE.Group {
+    readonly constraint: VRMNodeConstraint;
+    private _line;
+    private _attrPosition;
+    constructor(constraint: VRMNodeConstraint);
+    updateMatrixWorld(force?: boolean): void;
+}
+
+}`;export{n as default};
