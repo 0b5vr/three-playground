@@ -16,6 +16,7 @@ async function fetchExample( name: string ): Promise<void> {
 
   editor.getModel()!.setValue( text );
   apply();
+  hasEdit = false;
 }
 
 registerMonacoWorkers();
@@ -68,4 +69,18 @@ const apply = () => {
 editor.addCommand( monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, apply );
 editor.addCommand( monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyR, apply );
 
+let hasEdit = false;
+
+editor.onDidChangeModelContent( () => {
+  hasEdit = true;
+} );
+
 selectPresets.addEventListener( 'change', () => fetchExample( selectPresets.value ) );
+
+window.addEventListener( 'beforeunload', ( event ) => {
+  if ( hasEdit ) {
+    event.preventDefault();
+
+    event.returnValue = '';
+  }
+} );
