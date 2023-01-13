@@ -6,6 +6,7 @@ export default ( ( { canvas } ) => {
 
   // -- renderer -----------------------------------------------------------------------------------
   const renderer = new THREE.WebGLRenderer( { canvas } );
+  renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.setSize( width, height, false );
   renderer.setPixelRatio( window.devicePixelRatio );
 
