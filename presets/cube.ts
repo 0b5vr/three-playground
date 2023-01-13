@@ -6,7 +6,9 @@ export default ( ( { canvas } ) => {
 
   // -- renderer -----------------------------------------------------------------------------------
   const renderer = new THREE.WebGLRenderer( { canvas } );
+  renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.setSize( width, height, false );
+  renderer.setPixelRatio( window.devicePixelRatio );
 
   // -- camera -------------------------------------------------------------------------------------
   const camera = new THREE.PerspectiveCamera( 45.0, width / height, 0.01, 100.0 );
