@@ -61,10 +61,10 @@ export default ( ( { canvas } ) => {
   clock.start();
 
   renderer.setAnimationLoop( () => {
-    const time = clock.getElapsedTime();
+    const delta = clock.getDelta();
 
     controls.update();
-    currentVrm?.update( time );
+    currentVrm?.update( delta );
     renderer.render( scene, camera );
   } );
 
