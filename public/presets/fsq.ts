@@ -29,6 +29,7 @@ export default ( ( { canvas } ) => {
   // -- renderer -----------------------------------------------------------------------------------
   const renderer = new THREE.WebGLRenderer( { canvas } );
   renderer.setSize( width, height, false );
+  renderer.setPixelRatio( window.devicePixelRatio );
 
   // -- fsq ----------------------------------------------------------------------------------------
   const material = new THREE.ShaderMaterial( {
