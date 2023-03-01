@@ -1,7 +1,8 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { BVHLoader } from 'three/examples/jsm/loaders/BVHLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { VRM, VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
+
+const _v3A = new THREE.Vector3();
 
 export default ( ( { canvas } ) => {
   const { width, height } = canvas.getBoundingClientRect();
@@ -13,49 +14,69 @@ export default ( ( { canvas } ) => {
   renderer.setPixelRatio( window.devicePixelRatio );
 
   // -- camera -------------------------------------------------------------------------------------
-  const camera = new THREE.PerspectiveCamera( 45.0, width / height, 0.01, 100.0 );
-  camera.position.set( 0.0, 0.0, 5.0 );
+  const camera = new THREE.PerspectiveCamera( 45.0, width / height, 0.01, 10000.0 );
+  camera.position.set( 0.0, 1.0, 5.0 );
 
   const controls = new OrbitControls( camera, canvas );
+  controls.target.set( 0.0, 1.0, 0.0 );
 
   // -- scene --------------------------------------------------------------------------------------
   const scene = new THREE.Scene();
 
-  // -- light --------------------------------------------------------------------------------------
-  const directionalLight = new THREE.DirectionalLight( 0xffffff );
-  directionalLight.position.set( 3.0, 4.0, 5.0 );
-  scene.add( directionalLight );
+  // -- helpers ------------------------------------------------------------------------------------
+  const gridHelper = new THREE.GridHelper( 20 );
+  scene.add( gridHelper );
 
-  // -- vrm ----------------------------------------------------------------------------------------
-  const loader = new GLTFLoader();
-  loader.register( ( parser ) => {
-    return new VRMLoaderPlugin( parser );
-  } );
+  const axesHelper = new THREE.AxesHelper( 10 );
+  scene.add( axesHelper );
 
-  let currentVrm: VRM | null = null;
+  // -- bvh ----------------------------------------------------------------------------------------
+  let currentBoneGroup: THREE.Group | null = null;
+  let currentSkeletonHelper: THREE.SkeletonHelper | null = null;
+  let currentMixer: THREE.AnimationMixer | null = null;
 
-  async function loadVRM( url: string ) {
-    if ( currentVrm ) {
-      scene.remove( currentVrm.scene );
-      VRMUtils.deepDispose( currentVrm.scene );
+  const loader = new BVHLoader();
+
+  async function loadBVH( url: string ) {
+    if ( currentSkeletonHelper != null ) {
+      scene.remove( currentSkeletonHelper );
+      currentSkeletonHelper.dispose();
     }
 
-    const gltf = await loader.loadAsync( url );
+    if ( currentMixer != null ) {
+      currentMixer.stopAllAction();
+    }
 
-    currentVrm = gltf.userData.vrm;
+    if ( currentSkeletonHelper != null ) {
+      scene.remove( currentSkeletonHelper );
+    }
 
-    VRMUtils.removeUnnecessaryVertices( currentVrm.scene );
-    VRMUtils.removeUnnecessaryJoints( currentVrm.scene );
+    const bvh = await loader.loadAsync( url );
+    console.log( bvh );
 
-    currentVrm.scene.traverse( ( obj ) => {
-      obj.frustumCulled = false;
-    } );
+    const boundingBox = new THREE.Box3();
+    for ( const bone of bvh.skeleton.bones ) {
+      boundingBox.expandByPoint( bone.getWorldPosition( _v3A ) );
+    }
+    console.log( boundingBox );
 
-    VRMUtils.rotateVRM0( currentVrm );
+    currentSkeletonHelper = new THREE.SkeletonHelper( bvh.skeleton.bones[ 0 ] );
+    ( currentSkeletonHelper as any ).skeleton = bvh.skeleton;
 
-    scene.add( currentVrm.scene );
+    scene.add( currentSkeletonHelper );
+
+    const scale = 1.6 / boundingBox.getSize( _v3A ).y;
+    currentBoneGroup = new THREE.Group();
+    currentBoneGroup.scale.set( scale, scale, scale );
+    scene.add( currentBoneGroup );
+    currentBoneGroup.add( bvh.skeleton.bones[ 0 ] );
+
+    currentMixer = new THREE.AnimationMixer( currentSkeletonHelper );
+    const action = currentMixer.clipAction( bvh.clip );
+    action.setEffectiveWeight( 1.0 ).play();
   }
-  loadVRM( './assets/VRM1_Constraint_Twist_Sample.vrm' );
+
+  loadBVH( './assets/pirouette.bvh' );
 
   // -- loop ---------------------------------------------------------------------------------------
   const clock = new THREE.Clock();
@@ -65,7 +86,8 @@ export default ( ( { canvas } ) => {
     const delta = clock.getDelta();
 
     controls.update();
-    currentVrm?.update( delta );
+    currentMixer?.update( delta );
+    // currentSkeletonHelper?.update();
     renderer.render( scene, camera );
   } );
 
@@ -90,7 +112,7 @@ export default ( ( { canvas } ) => {
 
     const file = event.dataTransfer.files[ 0 ];
     const url = URL.createObjectURL( file );
-    await loadVRM( url );
+    await loadBVH( url );
     URL.revokeObjectURL( url );
   };
   window.addEventListener( 'drop', dropHandler );
@@ -101,7 +123,7 @@ export default ( ( { canvas } ) => {
     window.removeEventListener( 'dragover', dragoverHandler );
     window.removeEventListener( 'drop', dropHandler );
 
-    VRMUtils.deepDispose( currentVrm?.scene );
+    currentSkeletonHelper?.dispose();
     renderer.dispose();
   };
 } );
