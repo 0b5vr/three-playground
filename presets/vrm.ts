@@ -80,22 +80,27 @@ export default ( ( { canvas } ) => {
   window.addEventListener( 'resize', resizeHandler );
 
   // -- dnd handler --------------------------------------------------------------------------------
-  window.addEventListener( 'dragover', ( event ) => {
+  const dragoverHandler = ( event: DragEvent ) => {
     event.preventDefault();
-  } );
+  };
+  window.addEventListener( 'dragover', dragoverHandler );
 
-  window.addEventListener( 'drop', async ( event ) => {
+  const dropHandler = async ( event: DragEvent ) => {
     event.preventDefault();
 
     const file = event.dataTransfer.files[ 0 ];
     const url = URL.createObjectURL( file );
     await loadVRM( url );
     URL.revokeObjectURL( url );
-  } );
+  };
+  window.addEventListener( 'drop', dropHandler );
 
   // -- uninit -------------------------------------------------------------------------------------
   return () => {
     window.removeEventListener( 'resize', resizeHandler );
+    window.removeEventListener( 'dragover', dragoverHandler );
+    window.removeEventListener( 'drop', dropHandler );
+
     VRMUtils.deepDispose( currentVrm?.scene );
     renderer.dispose();
   };
