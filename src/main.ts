@@ -11,6 +11,9 @@ const canvas = document.getElementById( 'canvas' ) as HTMLCanvasElement;
 const darkMode = window.matchMedia( '(prefers-color-scheme: dark)' ).matches;
 
 async function fetchExample( name: string ): Promise<void> {
+  selectPresets.value = name;
+  location.hash = '#' + name;
+
   const res = await fetch( `./presets/${ name }.ts` );
   const text = await res.text();
 
@@ -31,7 +34,8 @@ const editor = monaco.editor.create( divEditor, {
   },
 } );
 
-fetchExample( 'cube' );
+const initialExample = location.hash.substring( 1 ) || 'cube';
+fetchExample( initialExample );
 
 monaco.languages.typescript.typescriptDefaults.setCompilerOptions( {
   target: monaco.languages.typescript.ScriptTarget.ES2016,
