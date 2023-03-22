@@ -272,10 +272,10 @@ brace-expansion@^1.1.7:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
 
-camera-controls@^1.37.4:
-  version "1.38.2"
-  resolved "https://registry.yarnpkg.com/camera-controls/-/camera-controls-1.38.2.tgz#3289013e6de05cee51dc98af87d3fc7c1a7df585"
-  integrity sha512-EfzbovxLssyWpJVG9uKcazSDDIEcd1hUsPhPF/OWWnICsKY9WbLY/2S4UPW73HHbvnVeR/Z9wsWaQKtANy/2Yg==
+camera-controls@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/camera-controls/-/camera-controls-2.3.3.tgz#45276a21d743a0e5d2ecdf1b23364228570ed66f"
+  integrity sha512-7OhbH0FyzpZtNKpxU9+NFMz9OeaQFWLVgrzotvpDnCCnAjaKhU8InTJZ9sMzfLYzfUbwBJ/ee6jXvWYwvgjuFA==
 
 commander@^2.9.0:
   version "2.20.3"
