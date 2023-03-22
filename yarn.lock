@@ -247,10 +247,10 @@
   dependencies:
     tempy "*"
 
-"@types/three@^0.148.0":
-  version "0.148.1"
-  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.148.1.tgz#e999a1a4840c12da8723187c315d8c8781d1066b"
-  integrity sha512-gZwIyTBMxKXqJHXmZ0dzvDieuQ4hz8MPNHtkRrAwER/xPlAh9eP2WIfaolvQY+wJAzlNV5a9ceS4JT+i/jybsw==
+"@types/three@^0.149.0":
+  version "0.149.0"
+  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.149.0.tgz#f48c03ffcf35b2d196f3532b51bc845e96f6090e"
+  integrity sha512-fgNBm9LWc65ER/W0cvoXdC0iMy7Ke9e2CONmEr6Jt8sDSY3sw4DgOubZfmdZ747dkPhbQrgRQAWwDEr2S/7IEg==
   dependencies:
     "@types/webxr" "*"
 
@@ -531,10 +531,10 @@ tempy@*, tempy@^3.0.0:
     type-fest "^2.12.2"
     unique-string "^3.0.0"
 
-three@^0.148.0:
-  version "0.148.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.148.0.tgz#b6f62f9c84227f8d51c151bf17b67984ded8e4d7"
-  integrity sha512-8uzVV+qhTPi0bOFs/3te3RW6hb3urL8jYEl6irjCWo/l6sr8MPNMcClFev/MMYeIxr0gmDcoXTy/8LXh/LXkfw==
+three@^0.149.0:
+  version "0.149.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.149.0.tgz#a9cf78b17d02f063ffe6dfca1e300eff2eab2927"
+  integrity sha512-tohpUxPDht0qExRLDTM8sjRLc5d9STURNrdnK3w9A+V4pxaTBfKWWT/IqtiLfg23Vfc3Z+ImNfvRw1/0CtxrkQ==
 
 type-fest@^1.0.1:
   version "1.4.0"
