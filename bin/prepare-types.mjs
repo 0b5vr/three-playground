@@ -73,12 +73,12 @@ async function buildTypes( moduleName, rootPath, srcDir ) {
       let data = await fs.promises.readFile( srcPath, { encoding: 'utf8' } );
 
       const currentPath = `${ moduleName }/${ relativePathFwSlashWoExt }`;
+      const modulePath = relativePathFwSlash === rootPath
+        ? moduleName
+        : currentPath.replace( /\/index$/, '' );
 
       data = replaceImports( data, currentPath );
-      data = encloseWithModuleDeclaration(
-        data,
-        relativePathFwSlash === rootPath ? moduleName : currentPath,
-      );
+      data = encloseWithModuleDeclaration( data, modulePath );
 
       await fse.outputFile(
         path.resolve( typeDestination, moduleName, relativePath ),
