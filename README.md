@@ -14,6 +14,8 @@
 - [lil-gui](https://github.com/georgealways/lil-gui)
 - [camera-controls](https://github.com/yomotsu/camera-controls)
 - [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)
+- [webgl-lint](https://github.com/greggman/webgl-lint)
+- [webgl-memory](https://github.com/greggman/webgl-memory)
 
 ### Build
 
