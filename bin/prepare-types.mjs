@@ -58,7 +58,7 @@ async function readdirRecursive( dir ) {
   return files;
 }
 
-async function buildTypes( moduleName, srcDir ) {
+async function buildTypes( moduleName, rootPath, srcDir ) {
   // list all .d.ts files in the src dir
   const dtsFiles = ( await readdirRecursive( srcDir ) )
     .filter( ( name ) => name.endsWith( '.d.ts' ) );
@@ -77,7 +77,7 @@ async function buildTypes( moduleName, srcDir ) {
       data = replaceImports( data, currentPath );
       data = encloseWithModuleDeclaration(
         data,
-        currentPath.replace( /\/index$/, '' ),
+        relativePathFwSlash === rootPath ? moduleName : currentPath,
       );
 
       await fse.outputFile(
@@ -104,25 +104,26 @@ async function buildTypes( moduleName, srcDir ) {
 
   // build types
   const moduleEntries = [
-    [ '@pixiv/three-vrm', path.resolve( dirname, '../node_modules/@pixiv/three-vrm/types' ) ],
-    [ '@pixiv/three-vrm-core', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-core/types' ) ],
-    [ '@pixiv/three-vrm-materials-hdr-emissive-multiplier', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-materials-hdr-emissive-multiplier/types' ) ],
-    [ '@pixiv/three-vrm-materials-mtoon', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-materials-mtoon/types' ) ],
-    [ '@pixiv/three-vrm-materials-v0compat', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-materials-v0compat/types' ) ],
-    [ '@pixiv/three-vrm-node-constraint', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-node-constraint/types' ) ],
-    [ '@pixiv/three-vrm-springbone', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-springbone/types' ) ],
-    [ '@pixiv/types-vrm-0.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrm-0.0/types' ) ],
-    [ '@pixiv/types-vrmc-materials-hdr-emissive-multiplier-1.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-materials-hdr-emissive-multiplier-1.0/types' ) ],
-    [ '@pixiv/types-vrmc-materials-mtoon-1.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-materials-mtoon-1.0/types' ) ],
-    [ '@pixiv/types-vrmc-node-constraint-1.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-node-constraint-1.0/types' ) ],
-    [ '@pixiv/types-vrmc-springbone-1.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-springbone-1.0/types' ) ],
-    [ '@pixiv/types-vrmc-vrm-1.0', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-vrm-1.0/types' ) ],
-    [ 'camera-controls', path.resolve( dirname, '../node_modules/camera-controls/dist' ) ],
-    [ 'three', path.resolve( dirname, '../node_modules/@types/three' ) ],
+    [ '@pixiv/three-vrm', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/three-vrm/types' ) ],
+    [ '@pixiv/three-vrm-core', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-core/types' ) ],
+    [ '@pixiv/three-vrm-materials-hdr-emissive-multiplier', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-materials-hdr-emissive-multiplier/types' ) ],
+    [ '@pixiv/three-vrm-materials-mtoon', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-materials-mtoon/types' ) ],
+    [ '@pixiv/three-vrm-materials-v0compat', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-materials-v0compat/types' ) ],
+    [ '@pixiv/three-vrm-node-constraint', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-node-constraint/types' ) ],
+    [ '@pixiv/three-vrm-springbone', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/three-vrm-springbone/types' ) ],
+    [ '@pixiv/types-vrm-0.0', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/types-vrm-0.0/types' ) ],
+    [ '@pixiv/types-vrmc-materials-hdr-emissive-multiplier-1.0', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-materials-hdr-emissive-multiplier-1.0/types' ) ],
+    [ '@pixiv/types-vrmc-materials-mtoon-1.0', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-materials-mtoon-1.0/types' ) ],
+    [ '@pixiv/types-vrmc-node-constraint-1.0', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-node-constraint-1.0/types' ) ],
+    [ '@pixiv/types-vrmc-springbone-1.0', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-springbone-1.0/types' ) ],
+    [ '@pixiv/types-vrmc-vrm-1.0', 'index.d.ts', path.resolve( dirname, '../node_modules/@pixiv/types-vrmc-vrm-1.0/types' ) ],
+    [ 'camera-controls', 'index.d.ts', path.resolve( dirname, '../node_modules/camera-controls/dist' ) ],
+    [ 'lil-gui', 'lil-gui.esm.d.ts', path.resolve( dirname, '../node_modules/lil-gui/dist' ) ],
+    [ 'three', 'index.d.ts', path.resolve( dirname, '../node_modules/@types/three' ) ],
   ];
   const mapEntryLines = ( await Promise.all(
-    moduleEntries.map( async ( [ moduleName, srcDir ] ) => {
-      return await buildTypes( moduleName, srcDir );
+    moduleEntries.map( async ( [ moduleName, rootPath, srcDir ] ) => {
+      return await buildTypes( moduleName, rootPath, srcDir );
     } )
   ) ).flat();
 

@@ -10,7 +10,8 @@
 
 ### Currently Available Modules
 
-- [three](https://github.com/mrdoob/three.js/)
+- [three](https://github.com/mrdoob/three.js)
+- [lil-gui](https://github.com/georgealways/lil-gui)
 - [camera-controls](https://github.com/yomotsu/camera-controls)
 - [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)
 
